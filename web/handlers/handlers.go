@@ -102,6 +102,7 @@ func ProxyUploadHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 
 	log.Println("Web的ProxyUploadHandler方法被调用")
 	u, _ := url.Parse("http://" + config.GetLbAddr() + ":9000/")
+	log.Println(u)
 	proxy := httputil.NewSingleHostReverseProxy(u)
 	proxy.ServeHTTP(w, r)
 }
