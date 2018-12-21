@@ -26,6 +26,8 @@ func Request(b *defs.ApiBody, w http.ResponseWriter, r *http.Request) {
 	u.Host = config.GetLbAddr() + ":" + u.Port()
 	newUrl := u.String()
 
+	log.Printf("拼接后的地址：%s", newUrl)
+
 	switch b.Method {
 	case http.MethodGet:
 		req, _ := http.NewRequest("GET", newUrl, nil)

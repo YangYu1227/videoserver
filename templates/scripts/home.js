@@ -365,7 +365,7 @@ function registerUser(callback) {
     }
 
     var dat = {
-        'url': 'http://'+ window.location.hostname + ':9000/user',
+        'url': 'http://'+ window.location.hostname + ':8000/user',
         'method': 'POST',
         'req_body': JSON.stringify(reqBody)
     };
@@ -414,7 +414,7 @@ function signinUser(callback) {
     }
 
     var dat = {
-        'url': 'http://'+ window.location.hostname + ':9000/user/' + username,
+        'url': 'http://'+ window.location.hostname + ':8000/user/' + username,
         'method': 'POST',
         'req_body': JSON.stringify(reqBody)
     };
@@ -447,7 +447,7 @@ function signinUser(callback) {
 
 function getUserId(callback) {
     var dat = {
-        'url': 'http://' + window.location.hostname + ':9000/user/' + uname,
+        'url': 'http://' + window.location.hostname + ':8000/user/' + uname,
         'method': 'GET'
     };
 
@@ -480,7 +480,7 @@ function createVideo(vname, callback) {
     };
 
     var dat = {
-        'url': 'http://' + window.location.hostname + ':9000/user/' + uname + '/videos',
+        'url': 'http://' + window.location.hostname + ':8000/user/' + uname + '/videos',
         'method': 'POST',
         'req_body': JSON.stringify(reqBody)
     };
@@ -512,7 +512,7 @@ function createVideo(vname, callback) {
 
 function listAllVideos(callback) {
     var dat = {
-        'url': 'http://' + window.location.hostname + ':9000/user/' + uname + '/videos',
+        'url': 'http://' + window.location.hostname + ':8000/user/' + uname + '/videos',
         'method': 'GET',
         'req_body': ''
     };
@@ -544,7 +544,7 @@ function listAllVideos(callback) {
 
 function deleteVideo(vid, callback) {
     var dat = {
-        'url': 'http://' + window.location.hostname + ':9000/user/' + uname + '/videos/' + vid,
+        'url': 'http://' + window.location.hostname + ':8000/user/' + uname + '/videos/' + vid,
         'method': 'DELETE',
         'req_body': ''
     };
@@ -583,7 +583,7 @@ function postComment(vid, content, callback) {
 
 
     var dat = {
-        'url': 'http://' + window.location.hostname + ':9000/videos/' + vid + '/comments',
+        'url': 'http://' + window.location.hostname + ':8000/videos/' + vid + '/comments',
         'method': 'POST',
         'req_body': JSON.stringify(reqBody)
     };
@@ -615,7 +615,7 @@ function postComment(vid, content, callback) {
 
 function listAllComments(vid, callback) {
     var dat = {
-        'url': 'http://' + window.location.hostname + ':9000/videos/' + vid + '/comments',
+        'url': 'http://' + window.location.hostname + ':8000/videos/' + vid + '/comments',
         'method': 'GET',
         'req_body': ''
     };

@@ -34,6 +34,8 @@ func StreamHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 }
 
 func UploadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+
+	log.Println("steamserver的UploadHandler方法被调用")
 	r.Body = http.MaxBytesReader(w, r.Body, defs.MAX_UPLOAD_SIZE)
 	if err := r.ParseMultipartForm(defs.MAX_UPLOAD_SIZE); err != nil {
 		response.SendErrorResponse(w, http.StatusBadRequest, "File is too big")
@@ -61,6 +63,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 		return
 	}
 
+	log.Printf("文件名：%s",filename)
 	ossfn := "videos/" + filename
 	path := "./videos/" + filename
 	bn := "yy-video-server-oss-xianggang"

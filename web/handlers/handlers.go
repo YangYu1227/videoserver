@@ -99,6 +99,8 @@ func ProxyVideoHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 }
 
 func ProxyUploadHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+
+	log.Println("Web的ProxyUploadHandler方法被调用")
 	u, _ := url.Parse("http://" + config.GetLbAddr() + ":9000/")
 	proxy := httputil.NewSingleHostReverseProxy(u)
 	proxy.ServeHTTP(w, r)
