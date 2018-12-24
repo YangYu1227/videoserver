@@ -118,7 +118,7 @@ $(document).ready(function() {
     $("#uploadform").on('submit', function(e) {
         e.preventDefault()
         var vname = $('#vname').val();
-
+        console.log(vname)
         createVideo(vname, function(res, err) {
             if (err != null ) {
                 //window.alert('encounter an error when try to create video');
@@ -129,9 +129,10 @@ $(document).ready(function() {
             var obj = JSON.parse(res);
             var formData = new FormData();
             formData.append('file', $('#inputFile')[0].files[0]);
-
+            console.log(res);
             $.ajax({
                 url : 'http://' + window.location.hostname + ':8080/upload/' + obj['id'],
+
                 //url:'http://127.0.0.1:8080/upload/dbibi',
                 type : 'POST',
                 data : formData,
