@@ -266,7 +266,7 @@ func AppUploadVideo(accesstoken, bookId, filename string) error {
 
 	if vid != "" {
 
-		err = deleteVideo(filename)
+		err = deleteVideo(vid)
 		if err != nil {
 			return err
 		}
@@ -333,7 +333,7 @@ func GetVideo(accesstoken, bookId string) (string, error) {
 
 func deleteVideo(vid string) error {
 	ossfn := "videos/" + vid
-	bn := "yy-video-server-oss-xianggang"
+	bn := "yy-book-server"
 	ok := ossops.DeleteObject(ossfn, bn)
 
 	if !ok {

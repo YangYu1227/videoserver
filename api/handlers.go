@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"github.com/tealeg/xlsx"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -120,6 +119,7 @@ func AppUploadVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	//log.Println("steamserver的UploadHandler方法被调用")
 	//log.Printf("%s\n", p.ByName("accesstoken&bookid"))
 
+	log.Println("开始上传视频")
 	strParams := p.ByName("accesstoken&bookid")
 
 	par := strings.Split(strParams, "&")
@@ -127,8 +127,8 @@ func AppUploadVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	accesstoken := par[0]
 	bookId := par[1]
 
-	//log.Printf("accesstoken: %s\n", accesstoken)
-	//log.Printf("bookId: %s\n", bookId)
+	log.Printf("accesstoken: %s\n", accesstoken)
+	log.Printf("bookId: %s\n", bookId)
 
 	formFile, _, err := r.FormFile("video") // <from name="file">
 	if err != nil {
@@ -140,34 +140,39 @@ func AppUploadVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	}
 	defer formFile.Close()
 
+	log.Println("获取上传的文件完成")
+
 	uid := uuid.Rand()
 	filename := uid.Hex()
+	log.Printf("生成的VID：%s\n", filename)
 
-	destFile, err := os.Create("./upload/" + filename)
+	data, err := ioutil.ReadAll(formFile)
 	if err != nil {
 		log.Printf("Read file error: %v", err)
 		SendResponse(w, defs.AppUploadVideoResponse{
 			Code: "0",
-			Msg:  "创建文件失败",
+			Msg:  "获取文件错误",
 		})
 		return
 	}
-	defer destFile.Close()
 
-	_, err = io.Copy(destFile, formFile)
+	err = ioutil.WriteFile("./videos/"+filename, data, 0666)
 	if err != nil {
+		log.Printf("Write file error: %v", err)
 		SendResponse(w, defs.AppUploadVideoResponse{
 			Code: "0",
-			Msg:  "文件复制失败",
+			Msg:  "写入文件错误",
 		})
 		return
 	}
 
+	log.Println("文件写入完成")
 	log.Printf("文件名：%s", filename)
 	ossfn := "videos/" + filename
 	path := "./videos/" + filename
-	bn := "yy-video-server-oss-xianggang"
+	bn := "yy-book-server"
 	ret := ossops.UploadToOss(ossfn, path, bn)
+
 	if !ret {
 		SendResponse(w, defs.AppUploadVideoResponse{
 			Code: "0",
@@ -175,6 +180,7 @@ func AppUploadVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 		})
 		return
 	}
+	log.Println("上传OSS完成")
 
 	_ = os.Remove(path)
 
@@ -186,6 +192,7 @@ func AppUploadVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 		})
 		return
 	}
+	log.Println("数据库更新完成")
 
 	SendResponse(w, defs.AppUploadVideoResponse{
 		Code: "1",
@@ -217,7 +224,9 @@ func AppGetVideoUrl(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 		})
 	}
 
-	url := "http://yy-video-server-oss-xianggang.oss-cn-hongkong.aliyuncs.com/videos/" + vid
+	log.Printf("数据库读取到的VID：%s\n", vid)
+
+	url := "https://yy-book-server.oss-cn-hongkong.aliyuncs.com/videos/" + vid
 
 	SendResponse(w, defs.AppGetVideoUrlResponse{
 		Code: "1",

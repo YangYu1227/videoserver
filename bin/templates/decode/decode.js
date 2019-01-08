@@ -59,6 +59,13 @@ function data_init() {
             if (obj.code === "1") {
                 let msg = obj.message;
                 //console.log(msg);
+
+                if (msg.barcodeIds == null){
+                    $("#listNone").show();
+                    $("#jsm_num").text('0');
+                    return;
+                }
+
                 if (msg.barcodeIds.length === 0) {
                     $("#listNone").show();
                     $("#jsm_num").text('0');

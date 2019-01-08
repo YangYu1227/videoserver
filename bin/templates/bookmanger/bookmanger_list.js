@@ -41,6 +41,16 @@ function list_init() {
                 let msg = obj.message;
                 let books = msg.books;
 
+                if (boos == null){
+                    clickAddButton();
+                    return;
+                }
+
+                if(books.length == 0){
+                    clickAddButton();
+                    return;
+                }
+
                 $.each(books, function (index, item) {
                     //console.log(item);
                     var str = '<ul id=' + item.book_id + ' class="clearfloat"><li class="width120">' + item.id + '</li>';

@@ -1,23 +1,23 @@
-var urlstring = 'http://47.104.19.254:8080/south_sun/services/';
-//var urlstring = "http://192.168.18.6:8080/south_sun/services/";
-$.postajax = function (url1, data1, fun, flag, beforeFun, comleteFun) { //flag如果传值则表示同步请求，不传值则表示默认异步请求,beforeFun为发送ajax过程中的事件，comleteFun为请求完成后的事件
-    var _flag = true;
-    if (flag) {
-        _flag = false;
-    }
-    $.ajax({
-        type: "post",
-        url: urlstring + url1,
-        async: _flag,
-        beforeSend: beforeFun,
-        data: JSON.stringify(data1),
-        success: fun,
-        complete: comleteFun,
-        error: function (data) {
-            console.log(data);
-        }
-    });
-};
+// var urlstring = 'http://47.104.19.254:8080/south_sun/services/';
+// //var urlstring = "http://192.168.18.6:8080/south_sun/services/";
+// $.postajax = function (url1, data1, fun, flag, beforeFun, comleteFun) { //flag如果传值则表示同步请求，不传值则表示默认异步请求,beforeFun为发送ajax过程中的事件，comleteFun为请求完成后的事件
+//     var _flag = true;
+//     if (flag) {
+//         _flag = false;
+//     }
+//     $.ajax({
+//         type: "post",
+//         url: urlstring + url1,
+//         async: _flag,
+//         beforeSend: beforeFun,
+//         data: JSON.stringify(data1),
+//         success: fun,
+//         complete: comleteFun,
+//         error: function (data) {
+//             console.log(data);
+//         }
+//     });
+// };
 
 function geturl() { //获取页面之间的传值
     var reg = new RegExp("bookbarcode/(\\d+)", "i");
@@ -34,37 +34,37 @@ function geturl2() { //获取页面之间的传值
     if (r != null) return unescape(r[1]);
     return null;
 }
-
-$("#header").load("../html/header.html", function () {
-    var str = '<div id="change_password" class="decode_div shadow">' +
-        '<div class="dialog_top">修改密码</div>' +
-        '<div class="decode_main">' +
-        '<div class="password_div clearfloat">' +
-        '<p>原密码：</p>' +
-        '<input type="password" class="decode_input1 decode_input" placeholder="请输入原来的密码" id="old_psw" />' +
-        '</div>' +
-        '<div class="password_div clearfloat">' +
-        '<p>新密码：</p>' +
-        '<input type="password" class="decode_input2 decode_input" placeholder="请输入新的密码" id="new_psw" />' +
-        '</div>' +
-        '<div class="password_div clearfloat">' +
-        '<p>重复输入：</p>' +
-        '<input type="password" class="decode_input3 decode_input" placeholder="请输入重复输入新密码" id="re_psw" />' +
-        '</div>' +
-        '<div class="clearfloat btn">' +
-        '<input type="button" value="确定" class="dialog_btn sure_btn" />' +
-        '<input type="button" value="取消" class="dialog_btn cancel_btn" />' +
-        "</div>" +
-        "</div>" +
-        "</div>"
-    $('body').append(str);
-    //后台退出登录
-    $('.exit').click(function () {
-        delCookie('us'); //删除cookie
-        sessionStorage.removeItem('cusinf');
-        window.location.href = "../login/login.html";
-
-    });
+//
+// $("#header").load("../html/header.html", function () {
+//     var str = '<div id="change_password" class="decode_div shadow">' +
+//         '<div class="dialog_top">修改密码</div>' +
+//         '<div class="decode_main">' +
+//         '<div class="password_div clearfloat">' +
+//         '<p>原密码：</p>' +
+//         '<input type="password" class="decode_input1 decode_input" placeholder="请输入原来的密码" id="old_psw" />' +
+//         '</div>' +
+//         '<div class="password_div clearfloat">' +
+//         '<p>新密码：</p>' +
+//         '<input type="password" class="decode_input2 decode_input" placeholder="请输入新的密码" id="new_psw" />' +
+//         '</div>' +
+//         '<div class="password_div clearfloat">' +
+//         '<p>重复输入：</p>' +
+//         '<input type="password" class="decode_input3 decode_input" placeholder="请输入重复输入新密码" id="re_psw" />' +
+//         '</div>' +
+//         '<div class="clearfloat btn">' +
+//         '<input type="button" value="确定" class="dialog_btn sure_btn" />' +
+//         '<input type="button" value="取消" class="dialog_btn cancel_btn" />' +
+//         "</div>" +
+//         "</div>" +
+//         "</div>"
+//     $('body').append(str);
+//     //后台退出登录
+//     $('.exit').click(function () {
+//         delCookie('us'); //删除cookie
+//         sessionStorage.removeItem('cusinf');
+//         window.location.href = "../login/login.html";
+//
+//     });
     // $('.change_password').click(function () {
     //     //console.log('修改密码！');
     //     windowShow("480px", "300px", $("#change_password"), $("#change_password .cancel_btn"), false);
@@ -99,7 +99,7 @@ $("#header").load("../html/header.html", function () {
     //         }
     //     }
     // })
-});
+// });
 //$("#footer").load("../html/footer.html", function() {
 
 //});
