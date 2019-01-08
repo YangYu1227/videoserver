@@ -1,7 +1,6 @@
 package main
 
 import (
-	"Study/video_server/web/handlers"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )
@@ -9,15 +8,13 @@ import (
 func RegisterHandler() *httprouter.Router {
 	router := httprouter.New()
 
-	router.GET("/", handlers.HomeHandler)
-	router.POST("/", handlers.HomeHandler)
-	router.GET("/userhome", handlers.UserHomeHandler)
-	router.POST("/userhome", handlers.UserHomeHandler)
+	router.GET("/", LoginHandler)
+	router.GET("/bookmanager", BookManagerHandler)
+	router.GET("/bookbarcode/:book_id", BookBarcodeHandler)
+	router.GET("/bookbarcodecount/:book_id", BookBarcodeCount)
 
-	router.POST("/api", handlers.APIHandler)
+	router.POST("/api", APIHandler)
 
-	router.GET("/videos/:vid-id", handlers.ProxyVideoHandler)
-	router.POST("/upload/:vid-id", handlers.ProxyUploadHandler)
 
 	router.ServeFiles("/statics/*filepath", http.Dir("./templates"))
 
@@ -26,5 +23,5 @@ func RegisterHandler() *httprouter.Router {
 
 func main() {
 	r := RegisterHandler()
-	http.ListenAndServe(":8080", r)
+	_ = http.ListenAndServe(":8080", r)
 }

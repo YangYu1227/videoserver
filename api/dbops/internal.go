@@ -1,7 +1,7 @@
 package dbops
 
 import (
-	"Study/video_server/api/defs"
+	"Study/book_server/api/defs"
 	"database/sql"
 	"log"
 	"strconv"
@@ -34,7 +34,7 @@ func RetrieveSession(sid string) (*defs.SimpleSession, error) {
 	var ttl string
 	var uname string
 	stmtOut.QueryRow(sid).Scan(&ttl, &uname)
-	if err != nil && err != sql.ErrNoRows{
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
@@ -72,12 +72,11 @@ func RetrieveAllSessions() (*sync.Map, error) {
 			break
 		}
 
-		if ttl, err1 := strconv.ParseInt(ttlstr, 10, 64); err1 == nil{
+		if ttl, err1 := strconv.ParseInt(ttlstr, 10, 64); err1 == nil {
 			ss := &defs.SimpleSession{Username: login_name, TTL: ttl}
 			m.Store(id, ss)
 			log.Printf(" session id: %s, ttl: %d", id, ss.TTL)
 		}
-
 
 	}
 

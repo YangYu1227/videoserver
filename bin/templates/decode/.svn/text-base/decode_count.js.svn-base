@@ -1,0 +1,38 @@
+var _bookNum = geturl("bookNum");
+
+function count_init() {
+	$.postajax("book/bookStatistics", {
+		"book_num": _bookNum //图书编码
+	}, function(data) {
+		var _data = data.data;
+		$("#jhm_num").text(_data.activationCodeTotal); //激活码总数
+		$("#ysj_jhmNum").text(_data.onTotal); //已上架
+		$("#wsj_num").text(_data.offTotal + "个"); //未上架
+		showPercent(_data.onTotal, _data.activationCodeTotal); //展示数据百分比
+		$("#yjhsb_num").text(_data.devicedTotal); //激活设备总数
+		$("#decode_num1").text(_data.activationCodeTotal); //激活码总数
+		$("#decode_num2").text(_data.activationTotal); //已激活解码锁
+		if(_data.activationCodeTotal!=0){
+			$("#bar_left").css("height","226px");
+		}
+		var _height = (_data.activationTotal / _data.activationCodeTotal) * 226;
+		$("#bar_mid").css("height", _height + "px"); //第二个柱子高度赋值
+	});
+$(".icon_back").click(function(){//返回
+	window.location.replace("../bookmanger/bookmanger_list.html");
+});
+};
+count_init(); //初始化方法
+//进度方法计算
+function showPercent(onNum, totalNum) {
+	if(onNum != 0) {
+		var deg = (onNum / totalNum) * 360;
+		if(Number(deg) <= 180) {
+			$(".rightcircle").css("transform", "rotate(" + deg + "deg)");
+		} else {
+			$(".rightcircle").css("transform", "rotate(180deg)");
+			$(".leftcircle").css("transform", "rotate(" + (deg - 180) + "deg)");
+		}
+	}
+
+};

@@ -1,12 +1,10 @@
 package main
 
 import (
-	"Study/video_server/api/auth"
-	h "Study/video_server/api/handlers"
-	"Study/video_server/api/session"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )
+
 type middleWareHandler struct {
 	r *httprouter.Router
 }
@@ -19,7 +17,7 @@ func NewMiddleWareHandler(r *httprouter.Router) http.Handler {
 
 func (m middleWareHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	//check session
-	auth.ValidateUserSession(r)
+	ValidateUserSession(r)
 
 	m.r.ServeHTTP(w, r)
 }
@@ -27,33 +25,37 @@ func (m middleWareHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
 
-	router.POST("/user", h.CreateUser)
+	router.POST("/login", BackgroundLogin)
+	router.POST("/changepassword", ChangePassword)
+	router.GET("/bookmanagerlist", BookManagerList)
+	router.POST("/addbook", AddBook)
+	router.POST("/updatebook", UpdateBook)
+	router.POST("/findbarcodelist", FindBarcodeList)
+	router.POST("/changebarcodestatus", ChangeBarcodeStatus)
+	router.POST("/addbarcode", AddBarcode)
+	router.POST("/deletebarcode", DeleteBarcode)
+	router.POST("/exportBarcode.xlsx", ExportBarcode)
+	router.POST("/barcodecount", BarcodeCount)
 
-	router.POST("/user/:username", h.Login)
 
-	router.GET("/user/:username", h.GetUserInfo)
-
-	router.POST("/user/:username/videos", h.AddNewVideo)
-
-	router.GET("/user/:username/videos", h.ListAllVideos)
-
-	router.DELETE("/user/:username/videos/:vid-id", h.DeleteVideo)
-
-	router.POST("/videos/:vid-id/comments", h.PostComment)
-
-	router.GET("/videos/:vid-id/comments", h.ShowComments)
+	router.POST("/app_user_login", AppUserLogin)
+	router.POST("/app_change_user_name", AppChangeUserName)
+	router.POST("/app_unlocked", AppUserUnlocked)
+	router.POST("/app_upload_video/:accesstoken&bookid", AppUploadVideo)
+	router.POST("/app_get_video_url", AppGetVideoUrl)
 
 	return router
 }
 
 func Prepare() {
-	session.LoadSessionsFromDB()
+	LoadSessionsFromDB()
 }
 
 func main() {
 	Prepare()
+
 	r := RegisterHandlers()
 	mh := NewMiddleWareHandler(r)
-	http.ListenAndServe(":8000", mh)
+	_ = http.ListenAndServe(":8000", mh)
 }
 

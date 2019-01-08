@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录页</title>
+		<link rel="stylesheet" href="../css/common.css" />
+	</head>
+	<body>
+		<div id="login" class="login_content shadow">
+			<div class="login_top">新蕾出版社智能图书管理系统管理后台</div>
+			<div class="login_mid">
+				<input type="text" class="login_input login_user" id="login_user" placeholder="用户名" />
+				<span class="error_msg" id="name_msg">用户名不能为空</span>
+				<input type="text" class="login_input login_password" id="login_password" placeholder="密码" />
+				<span class="error_msg" id="password_msg">密码不能为空</span>
+			</div>
+			<div class="login_footer">
+				<input type="button" value="登录" class="login_btn pointer" id="login_btn" />
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js?v=1.1"></script>
+<script type="text/javascript" src="login.js"></script>

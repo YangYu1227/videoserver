@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>解码锁</title>
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../bookmanger/bookmanger.css" />
+		<link rel="stylesheet" href="decode.css?v=1.0" />
+	</head>
+
+	<body>
+		<div id="header"></div>
+		<div class="content">
+			<div class="content_top shadow icon_back">图书管理</div>
+			<div class="content_topSearch">
+				<div class="search_div clearfloat">
+					<span class="pull_left">解码锁搜索：</span>
+					<input type="text" class="search_text pull_left" id="search_text" placeholder="请输入解锁码进行解锁" />
+					<input type="button" class="search_btn pull_left pointer" id="search_btn" value="搜索" />
+				</div>
+				<div class="state_div clearfloat">
+					<span class="pull_left">状态：</span>
+					<span class="state_list pull_left stated" data-state="">全部</span>
+					<span class="state_list pull_left" data-state="1">已上架</span>
+					<span class="state_list pull_left" data-state="0">未上架</span>
+				</div>
+				<div class="notes clearfloat">
+					<p>目前解锁码总数： <span id="jsm_num">10</span>个</p>
+					<p class="notes_p">注：为了防止解锁码管理混乱，【已上架】的解锁码无法下架及删除</p>
+
+				</div>
+			</div>
+
+			<div class="add_btnDiv">
+				<!--<input type="button" class="pointer shadow decode_btn" value="上架" />
+				<input type="button" class="pointer shadow decode_btn" value="全部上架" />
+				<input type="button" class="pointer shadow decode_btn" value="删除" />-->
+				<input type="button" class="pointer shadow width124 decode_btn" value="+新增解锁码" />
+				<input type="button" class="pointer shadow width124 decode_btn_load float_right" value="导出解锁码" />
+			</div>
+			<div class="content_table shadow">
+				<ul class="table_title">
+					<!--<li class="width110 radio_list pointer radio_all">
+						<img src="../img/check_all.png" />
+						<span>全选</span>
+					</li>-->
+					<li class="width110">序号</li>
+					<li class="width312">解码锁编号</li>
+					<li class="width140">解锁码数量</li>
+					<li class="width140">已解锁数量</li>
+					<li class="width172">创建时间</li>
+					<li class="width110">状态</li>
+					<li class="width222">操作</li>
+				</ul>
+				<div class="table_list" id="decode_table"></div>
+				<!--无数据-->
+				<div class="listNone" id="listNone">
+					<div class="noData"></div>
+					<div class="noData_word">当前表格暂无数据</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="footer">版权信息</div>
+		<!--弹出框-->
+		<!--删除-->
+		<div id="delet_div" class="dialog_div shadow">
+			<div class="dialog_top">删除</div>
+			<div class="dialog_main">
+				<p>确认删除选中的未上架解锁码？</p>
+				<div class="clearfloat">
+					<input type="button" value="确定" class="dialog_btn sure_btn" />
+					<input type="button" value="取消" class="dialog_btn cancel_btn" />
+				</div>
+			</div>
+		</div>
+		<!--新增解锁码-->
+		<div id="decode_div" class="decode_div shadow">
+			<div class="dialog_top">新增解锁码</div>
+			<div class="decode_main">
+				<input type="text" class="decode_input" placeholder="请输入新增解锁码数量" id="decode_addText" />
+				<span class="decode_msg">解锁码数量不能为空</span>
+				<!--<span class="decode_msg_max">解锁码数量不能超过100</span>-->
+				<span>注：单次最多添加5000个</span>
+				<div class="clearfloat">
+					<input type="button" value="确定" class="dialog_btn sure_btn" />
+					<input type="button" value="取消" class="dialog_btn cancel_btn" />
+				</div>
+			</div>
+		</div>
+		<!--<div id="change_password" class="decode_div shadow">
+			<div class="dialog_top">修改密码</div>
+			<div class="decode_main">
+				<div class="password_div clearfloat">
+					<p>原密码：</p>
+					<input type="text" class="decode_input" placeholder="请输入原来的密码" id="old_psw" />
+				</div>
+				<div class="password_div clearfloat">
+					<p>新密码：</p>
+					<input type="text" class="decode_input" placeholder="请输入新的密码" id="new_psw" />
+				</div>
+				<div class="password_div clearfloat">
+					<p>重复输入：</p>
+					<input type="text" class="decode_input" placeholder="请输入重复输入新密码" id="re_psw" />
+				</div>
+				<div class="clearfloat btn">
+					<input type="button" value="确定" class="dialog_btn sure_btn" />
+					<input type="button" value="取消" class="dialog_btn cancel_btn" />
+				</div>
+			</div>
+		</div>-->
+		<!-------------------分页--------------------->
+		<div class="article-page">
+			<div id="decode_page"></div>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../lay/dest/layui.all.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../js/common.js?v=1.1"></script>
+<script type="text/javascript" src="decode.js?v=1.1"></script>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>微信分享</title>
+		<meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+		<link type="text/css" rel="stylesheet" href="weixin_share.css" />
+	</head>
+	<script>
+		document.documentElement.style.fontSize = document.documentElement.clientWidth / 750 * 100 + 'px';
+	</script>
+
+	<body>
+		<div id="share_content">
+			<div id="share_top">
+				<p class="friend">
+					<span class="friend_fr">你的好友</span>
+					<span class="friend_name" id="friend_name">哈自动</span>
+				</p>
+				<p class="app">通过<span>自拍相机</span>创作的专属动画片吧！</p>
+			</div>
+
+			<div id="share_video" class="share_video" style="width: 6.5rem;height: 3.66rem;">
+				<!--<div class="video_btn"></div>-->
+			</div>
+			<div id="share_main">
+				<img class="shu_img" src="shu.png" />
+				<div class="main_top">
+					<p class="title">怎样创作自己的专属动画片？</p>
+					<p class="line"></p>
+					<p class="eng_word">HOW TO CREATY YOUR OWN ANIMATED CARTOON</p>
+				</div>
+				<ul class="color_blocks">
+					<li class="color_block blue">
+						<span>1</span>
+						<p>给你的《神奇动画涂色书》图上缤纷的颜色</p>
+					</li>
+					<li class="color_block yellow">
+						<span>2</span>
+						<p>下载美拍应用程序，拍一拍！</p>
+					</li>
+					<li class="color_block red">
+						<span>3</span>
+						<p>接下来就是见证奇迹的时刻，涂色作品变动画啦！</p>
+					</li>
+				</ul>
+				<div class="step_summary">
+					<img class="step_img" src="04_1.png" />
+					<p>就是这么简单！<br/>只需3步，你就变身动画小导演！</p>
+				</div>
+			</div>
+			<div class="download_btn">点击下载美拍</div>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/ckplayer.js"></script>
+<script type="text/javascript">
+	$(function() {
+//		var videoObject = {
+//			container: '#share_video', //容器的ID或className
+//			variable: 'player', //播放函数名称
+//			flashplayer: true,
+//			poster: 'material/poster.jpg', //封面图片
+//			video: "http://njg.oss-cn-qingdao.aliyuncs.com/njg/file/6efec8acb6d345e0992d59da62e66674.mp4"//data.data //视频地址列表形式
+//		};
+//		var player = new ckplayer(videoObject);
+		$.postajax("book/findVedioByDevicedAndBookNum", {
+			"book_num": geturl("booksid"), //图书编号
+			"deviced_id": geturl("accesstoken") //:设备id
+		}, function(data) {
+			if(data.status == "1") {
+				$("#friend_name").text(geturl("name")); //好友昵称
+				var videoObject = {
+					container: '#share_video', //容器的ID或className
+					variable: 'player', //播放函数名称
+					flashplayer: false,
+					poster: 'material/poster.jpg', //封面图片
+					video: data.data //视频地址列表形式
+				};
+				var player = new ckplayer(videoObject);
+			}else{
+				$("#friend_name").text(geturl("name")); //好友昵称
+				var videoObject = {
+					container: '#share_video', //容器的ID或className
+					variable: 'player', //播放函数名称
+					flashplayer: false,
+					poster: 'material/poster.jpg', //封面图片
+					video: "https://njg.oss-cn-qingdao.aliyuncs.com/njg/file/001c7132b0174fab8cc9bd5d54df6058.mp4" //视频地址列表形式
+				};
+				var player = new ckplayer(videoObject);
+			}
+		})
+	});
+</script>

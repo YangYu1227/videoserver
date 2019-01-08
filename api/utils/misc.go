@@ -7,9 +7,50 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
+	"uuid"
 	"yy/config"
 )
+
+func singleBarcode() string {
+	uid := uuid.Rand()
+	uid2 := uid.Hex()
+	//fmt.Printf("原始UUID：%s\n", uid2)
+
+	uid2 = strings.Replace(uid2, "-", "", -1)
+
+	//fmt.Printf("去掉“-”之后的UUID：%s\n", uid2)
+
+	uid3 := uid2[0:20]
+
+	//fmt.Printf("取前20个字符的UUID：%s\n", uid3)
+
+	return uid3
+}
+
+func MultipleBarcode(num int) (barcodes []string) {
+	for i := 0; i < num; i++ {
+		barcode := singleBarcode()
+		barcodes = append(barcodes, barcode)
+	}
+	return
+}
+
+func BarcodeId() string {
+	s := time.Now().Format("20060102150405")
+	s = "B" + s
+	//fmt.Printf("time:%v\n", s)
+	return s
+}
+
+func ByteToString(bs []uint8) string {
+	var ba []byte
+	for _, b := range bs {
+		ba = append(ba, byte(b))
+	}
+	return string(ba)
+}
 
 func NewUUID() (string, error) {
 	uuid := make([]byte, 16)

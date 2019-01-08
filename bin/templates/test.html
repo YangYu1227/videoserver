@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./layui/css/layui.css"/>
+</head>
+<body>
+<button class="layui-btn">增加</button>
+
+<button class="layui-btn layui-btn-sm">
+    <i class="layui-icon">&#xe654;</i>
+</button>
+</body>
+</html>
+
+<script type="text/javascript">
+
+    let currentDate = "2019-1-1";
+    let classCount = 7;
+    let classIndex = 0;
+
+    while (classIndex <= classCount) {
+        if (currentDate 不是节假日) {
+            currentDate = addDate(currentDate);
+            continue;
+        } else {
+            if (currentDate 不上课) {
+                currentDate = addDate(currentDate);
+                continue;
+            } else {
+                classIndex++;
+                currentDate = addDate(currentDate);
+            }
+        }
+    }
+
+
+    function addDate(strDate) {
+        let date = new Date(strDate);
+        date.setDate(date.getDate() + 1);
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        return date.getFullYear() + '-' + getFormatDate(month) + '-' + getFormatDate(day);
+    }
+
+    function getFormatDate(arg) {
+        if (arg == undefined || arg == '') {
+            return '';
+        }
+
+        let re = arg + '';
+        if (re.length < 2) {
+            re = '0' + re;
+        }
+
+        return re;
+    }
+
+</script>

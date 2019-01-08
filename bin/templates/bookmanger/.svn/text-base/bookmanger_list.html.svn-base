@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>图书管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/layui.css" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="bookmanger.css" />
+	</head>
+
+	<body>
+		<div id="header"></div>
+		<div class="content">
+			<div class="content_top shadow">图书管理</div>
+			<div class="add_btnDiv">
+				<input type="button" class="add_btn pointer shadow bookBtn_edit add" value="+新增图书" />
+			</div>
+			<div class="content_table shadow">
+				<ul class="table_title">
+					<li class="width120">序号</li>
+					<li class="width280">图书名称</li>
+					<li class="width280">图书识别号</li>
+					<li class="width220">解锁码数量</li>
+					<li class="width300">操作</li>
+				</ul>
+				<div class="table_list" id="table_list"></div>
+			</div>
+			<!-------------------分页--------------------->
+			<div class="article-page">
+				<div id="pageDemo"></div>
+			</div>
+		</div>
+		<div id="footer" class="footer">版权信息</div>
+
+	</body>
+
+</html>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../lay/dest/layui.all.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../js/common.js?v=1.1"></script>
+<script type="text/javascript" src="bookmanger_list.js?v=1.1"></script>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>header</title>
+	</head>
+	<body>
+		<div class="header_body">
+			<div class="header_content">
+				<span class="welcome pull_left">欢迎光临新蕾出版社智能图书管理系统后台</span>
+				<span class="exit pull_right">退出系统</span>
+				<span class="pull_right change_password">修改密码</span>
+			</div>
+		</div>
+	</body>
+</html>

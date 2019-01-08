@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录页</title>
+		<link rel="stylesheet" type="text/css" href="/statics/css/layui.css" />
+		<link rel="stylesheet" href="/statics/css/common.css" />
+	</head>
+	<body>
+		<div id="login" class="login_content shadow">
+			<div class="login_top">新蕾出版社智能图书管理系统管理后台</div>
+			<div class="login_mid">
+				<input type="text" class="login_input login_user" id="login_user" placeholder="用户名" />
+				<span class="error_msg" id="name_msg">用户名不能为空</span>
+				<input type="text" class="login_input login_password" id="login_password" placeholder="密码" />
+				<span class="error_msg" id="password_msg">密码不能为空</span>
+			</div>
+			<div class="login_footer">
+				<input type="button" value="登录" class="login_btn pointer" id="login_btn" />
+			</div>
+		</div>
+
+		<div id="login_msg" class="decode_div shadow">
+			<div class="dialog_top">消息</div>
+			<div class="decode_main">
+				<span class="decode_msg">登录失败,账号或密码错误</span>
+				<div class="clearfloat btn">
+					<input type="button" value="取消" class="dialog_btn cancel_btn" />
+				</div>
+			</div>
+		</div>
+
+
+	</body>
+</html>
+<script type="text/javascript" src="/statics/js/jquery.min.js"></script>
+<script src="/statics/lay/dest/layui.all.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/statics/js/common.js?v=1.1"></script>
+<script type="text/javascript" src="statics/login/login.js"></script>

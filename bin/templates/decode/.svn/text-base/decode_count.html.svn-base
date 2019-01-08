@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>解码锁统计</title>
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../bookmanger/bookmanger.css" />
+	</head>
+
+	<body>
+		<div style="width: 100%;height: 100%;">
+			<div id="header"></div>
+			<div class="content clearfloat">
+				<div class="content_top shadow"><span class="icon_back pointer"></span>本书解码锁统计</div>
+				<div class="jsm_content clearfloat">
+					<!--左边圆形-->
+					<div class="pull_left content_left shadow">
+						<p class="jms_title">解码锁概况</p>
+						<p class="jsm_wsjWord clearfloat"><span class="wsj_bgBlock pull_left"></span><span class="pull_left">未上架</span></p>
+						<p class="wsj_num" id="wsj_num"></p>
+						<div class="circle">
+							<div class="circle_left">
+								<div class="circleProgress leftcircle"></div>
+							</div>
+							<div class="circle_right">
+								<div class="circleProgress rightcircle"></div>
+							</div>
+							<div class="ysj_count">
+								<p class="ysj_num"><span id="ysj_jhmNum"></span>个</p>
+								<p class="jsm_wsjWord clearfloat" style="padding-left: 45px;">
+									<span class="ysj_bgBlock pull_left"></span>
+									<span class="pull_left">已上架</span>
+								</p>
+							</div>
+						</div>
+						<p class="jhm_count">激活码总数：<span class="jhm_num" id="jhm_num">100</span>个</p>
+					</div>
+					<!--右边柱行-->
+					<div class="pull_right content_right shadow">
+						<p class="jms_title">解码锁详情</p>
+						<p class="clearfloat jms_states">
+							<span class="jsmzs">解码锁总数</span>
+							<span class="jhjms">用户已激活解码锁数量</span>
+							<!--<span class="wcjms">已完成使用解码锁数量</span>-->
+						</p>
+						<div class="bar_graph clearfloat">
+							<div class="bargraph_left">
+								<div class="" id="bar_left"></div>
+								<p><span id="decode_num1"></span>个</p>
+							</div>
+
+							<div class="bargraph_mid">
+								<div class="" id="bar_mid"></div>
+								<p><span id="decode_num2"></span>个</p>
+							</div>
+							<!--<div class="bargraph_right">
+							<div class="" id="bar_right"></div>
+							<p><span id="decode_num3"></span>个</p>
+						</div>-->
+						</div>
+						<p class="yjhsb_num">已激活设备总数：<span id="yjhsb_num"></span>个</p>
+					</div>
+				</div>
+			</div>
+			<div id="footer" class="footer">版权信息</div>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js?v=1.1"></script>
+<script src="../lay/dest/layui.all.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="decode_count.js?v=1.1"></script>

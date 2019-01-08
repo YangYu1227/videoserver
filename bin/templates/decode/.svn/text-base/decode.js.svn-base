@@ -1,0 +1,224 @@
+var decode_page = 1;
+var book_num = geturl("bookNum");
+var decode_num = 0;//解锁码数量
+function decode_init() {
+	data_init();
+	click_fun(); //点击事件
+};
+decode_init(); //初始化数据
+function data_init() {
+	$.postajax("book/findBookUnlockList", {
+		"book_num": book_num, //图书编码 
+		"unlock_num": $("#search_text").val(), //解锁码编号
+		"pages_number": decode_page,
+		"status": $(".stated").attr("data-state") //状态（0：未上架；1：已上架） 注：全部传“”
+	}, function(data) {
+		var _data = data.data;
+		$("#decode_table").html("");
+		if(_data.bookUnlockList.length > 0) {
+			$("#listNone").hide();
+			$.each(_data.bookUnlockList, function(index, item) {
+				var str = '<ul id="' + item.unlock_num + '" class="clearfloat">';
+				//				<li class="width110 radio_list radio pointer" data-num="' + item.unlock_num + '"><img src="../img/check_box.png"/></li>
+				str += '<li class="width110">' + item.rownum + '</li>';
+				str += '<li class="width312">' + item.unlock_num + '</li>';
+				str += '<li class="width140">' + item.book_unlock_count + '</li>';
+				str += '<li class="width140">' + item.book_unlocked_count + '</li>';
+				str += '<li class="width172">' + changeTime1(item.create_time, "date") + '</li>';
+				if(item.status == "0") {
+					str += '<li class="width110">未上架</li>'; //状态：0，未上架；1：上架；2：删除
+					str += '<li class="width222" data-num="' + item.unlock_num + '">';
+					str += '<span class="pointer bookBtn sj">【上架】</span>';
+					str += '<span class="pointer bookBtn del">【删除】</span>';
+				} else {
+					str += '<li class="width110">已上架</li>'; //状态：0，未上架；1：上架；2：删除
+					str += '<li class="width222">';
+//					str += '<span class="pointer bookBtn dc">【导出】</span>';
+				}
+				str += '</li></ul>';
+				$("#decode_table").append(str);
+				decode_num += item.book_unlock_count
+			});
+			$("#jsm_num").text(decode_num);
+			fenye(Math.ceil(data.total / 10)); //分页
+			//操作点击事件
+			$(".bookBtn").click(function() {
+				var _num = $(this).parent().attr("data-num");
+				if($(this).hasClass("del")) { //删除
+					decode_edit("del", "only", _num);
+				} else if($(this).hasClass("sj")) { //上架
+					decode_edit("sj", "only", _num);
+				}
+			});
+		} else {
+			$("#listNone").show();
+			$("#jsm_num").text('0');
+		}
+
+	})
+};
+
+function click_fun() {
+	//点击搜索按钮
+	$("#search_btn").click(function() {
+		decode_page = 1;
+		data_init();
+	});
+	//按钮
+	$(".decode_btn").click(function() {
+		$(this).addClass("decode_btned").siblings().removeClass("decode_btned");
+		var _val = $(this).val();
+		if(_val == "上架") {
+			decode_edit("sj");
+		} else if(_val == "全部上架") {
+			decode_edit("all");
+		} else if(_val == "删除") {
+			decode_edit("del");
+		} else { //新增
+			windowShow("480px", "300px", $("#decode_div"), $("#decode_div .cancel_btn"), false);
+		}
+	});
+	$(".decode_btn_load").click(function(){
+		window.open('http://47.104.19.254:8080/south_sun/services/exportBook/exportBookUnlock?book_num='+book_num)
+	})
+	//新增解锁码确定按钮
+	$("#decode_div .sure_btn").click(function() {
+		var _val = $("#decode_addText").val();
+		console.log(_val);
+		if(0<_val && _val<=5000 &&_val!='') {
+			$(".decode_msg").css("visibility", "hidden");
+			$.postajax("book/addBookUnlock", {
+				"book_unlock_count": _val,
+				"book_num": book_num
+			}, function(data) {
+				if(data.status == "1") {
+					layer.closeAll();
+					$("#decode_div").css('display', 'none');
+					$("#decode_addText").val("");
+					decode_page = 1;
+					data_init();
+				}
+			})
+		} else if(_val.trim()>5000){
+			$(".decode_msg").text("解锁码数量不能超过5000").css("visibility", "visible");
+		} else if(_val == ''){
+			$(".decode_msg").text("解锁码数量不能为空").css("visibility", "visible");
+		}
+
+	});
+	//状态选择
+	$(".state_list").click(function() {
+		$(this).addClass("stated").siblings(".state_list").removeClass("stated");
+		data_init();
+	});
+};
+//删除未上架内容
+function decode_edit(type, source, num) {
+	var checkedArr = [];
+	var _status = "";
+	var _msg = "";
+	checkedArr.push(num);
+	if(type == "sj") {
+		_status = "1";
+		_msg = "确认上架选中的解锁码？";
+	} else if(type == "del") {
+		_status = "2";
+		_msg = "确认删除选中的未上架解锁码？ ";
+	}
+	var dom = "delet_div";
+	var str = '<div id="' + dom + '" class="dialog_div shadow"> <div class="dialog_top"> 删除 </div>';
+	str += ' <div class="dialog_main" ><p>' + _msg + '</p> ';
+	str += '<div class="clearfloat" ><input type = "button" value="确定" class="dialog_btn sure_btn" /><input type="button" value="取消" class="dialog_btn cancel_btn" />';
+	str += '</div> </div> </div>';
+	aresure("delet_div", str, "", 2);
+	$("#delet_div .sure_btn").off("click").on("click", function() {
+		$.postajax("book/updateBookUnlock", {
+			"unlockNums": checkedArr, //解锁码编号（数组格式）[“1”,“2”]
+			"status": _status
+		}, function(data) {
+			if(data.status == "1") {
+				data_init();
+				layer.closeAll();
+			}
+		});
+	})
+	$("#delet_div .cancel_btn").off("click").on("click", function() {
+			layer.closeAll();
+		})
+		//	if(source) {} else {
+		//		$(".radio").each(function() {
+		//			var _src = $(this).find("img").attr("src");
+		//			if(_src == "../img/check_boxed.png") {
+		//				checkedArr.push($(this).attr("data-num"));
+		//			}
+		//		})
+		//		if(type != "all") {
+		//			if(checkedArr.length <= 0) {
+		//				var error_msg = "";
+		//				if(type == "sj") { //上架
+		//					error_msg = "请先选择上架项";
+		//				} else if(type == "del") { //删除
+		//					error_msg = "请先选择删除项";
+		//				}
+		//				msg(error_msg);
+		//				return false;
+		//			}
+		//		}
+		//
+		//	}
+		//	closearesure("delet_div", deletFun, "")
+};
+//分页控件
+function fenye(pages) {
+	layui.use(['layer', 'laypage', 'element', 'laydate'], function() {
+		var laypage = layui.laypage
+		laypage({
+			cont: "decode_page", //分页容器的id
+			pages: pages, //总页数
+			skin: '#fff', //自定义选中色值
+			skip: true, //开启跳页
+			curr: decode_page, //当前页码
+			jump: function(obj, first) {
+				if(!first) {
+					//layer.msg('第' + obj.curr + '页');
+					//					homeorder_postData.pages_number = (obj.curr - 1) * 10 + 1;
+					decode_page = obj.curr;
+					data_init();
+				}
+			}
+		});
+	})
+};
+//选择框选择
+function radio_fun() {
+	//点击选择
+	$(".radio_list").click(function() {
+		var obj = $(this).find("img");
+		var _flag = $(this).find("img").hasClass("checked");
+		var _all = $(this).hasClass("radio_all");
+		if(_all) { //全选
+			if(_flag) { //如果选中了
+				$(".radio_list").find("img").attr("src", "../img/check_box.png");
+				$(".radio_all").find("img").attr("src", "../img/check_all.png");
+				$(".radio_list").find("img").removeClass("checked");
+			} else {
+				$(".radio_list").find("img").attr("src", "../img/check_boxed.png");
+				$(".radio_all").find("img").attr("src", "../img/check_alled.png");
+				$(".radio_list").find("img").addClass("checked");
+			}
+		} else { //单个点击
+			if(_flag) { //如果选中了
+				if($(".radio_all").find("img").hasClass("checked")) { //全选
+					$(".radio_all").find("img").removeClass("checked");
+					$(".radio_all").find("img").attr("src", "../img/check_all.png");
+				}
+				obj.attr("src", "../img/check_box.png");
+				obj.removeClass("checked");
+			} else {
+				obj.attr("src", "../img/check_boxed.png");
+				obj.addClass("checked");
+			}
+
+		}
+	});
+};
