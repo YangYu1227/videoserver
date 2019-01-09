@@ -44,6 +44,13 @@ function count_init() {
 
                 let barcode = obj.message;
 
+                if (barcode == null) {
+                    return;
+                }
+                if (barcode.length == 0) {
+                    return;
+                }
+
                 $("#jhm_num").text(barcode.all_count); //激活码总数
                 $("#ysj_jhmNum").text(barcode.putaway_count); //已上架
                 $("#wsj_num").text(barcode.noput_count + "个"); //未上架

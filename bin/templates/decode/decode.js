@@ -60,7 +60,12 @@ function data_init() {
                 let msg = obj.message;
                 //console.log(msg);
 
-                if (msg.barcodeIds == null){
+                if (msg.barcodeIds == null) {
+                    $("#listNone").show();
+                    $("#jsm_num").text('0');
+                    return;
+                }
+                if (msg.barcodeIds == null) {
                     $("#listNone").show();
                     $("#jsm_num").text('0');
                     return;
