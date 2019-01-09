@@ -170,7 +170,7 @@ func AppUploadVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	log.Printf("文件名：%s", filename)
 	ossfn := "videos/" + filename
 	path := "./videos/" + filename
-	bn := "yy-book-server"
+	bn := "njg"
 	ret := ossops.UploadToOss(ossfn, path, bn)
 
 	if !ret {
@@ -226,7 +226,7 @@ func AppGetVideoUrl(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 
 	log.Printf("数据库读取到的VID：%s\n", vid)
 
-	url := "https://yy-book-server.oss-cn-hongkong.aliyuncs.com/videos/" + vid
+	url := "https://njg.oss-cn-qingdao-internal.aliyuncs.com/videos/" + vid
 
 	SendResponse(w, defs.AppGetVideoUrlResponse{
 		Code: "1",

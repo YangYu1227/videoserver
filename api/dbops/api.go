@@ -333,7 +333,7 @@ func GetVideo(accesstoken, bookId string) (string, error) {
 
 func deleteVideo(vid string) error {
 	ossfn := "videos/" + vid
-	bn := "yy-book-server"
+	bn := "njg"
 	ok := ossops.DeleteObject(ossfn, bn)
 
 	if !ok {

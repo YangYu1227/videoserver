@@ -1,4 +1,4 @@
 {
-  "lb_addr": "172.31.23.242",
-  "oss_addr": "oss-cn-hongkong-internal.aliyuncs.com"
+  "lb_addr": "172.31.0.135",
+  "oss_addr": "oss-cn-qingdao-internal.aliyuncs.com"
 }
